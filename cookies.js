@@ -88,6 +88,25 @@
       this.get();
       return this;
     },
+    parse_meta: function() {
+      var x = document.getElementsByTagName("meta"), met = {}, i = x.length;
+      for( i; i; i ) {
+        i--;
+        if( x[i].content && x[i].name ) {
+          met[x[i].name] = x[i].content;
+        }
+      }
+      if( met.hasOwnProperty( 'simplecookie_ga_code' ) && met.simplecookie_ga_code ) {
+        this.set_ga_code( ga_code );
+      }
+      if( met.hasOwnProperty( 'simplecookie_types' ) && met.simplecookie_types ) {
+        this.reset_types().set_types( met.simplecookie_types.split(/\s+/) );
+      }
+      if( met.hasOwnProperty( 'simplecookie_policy' ) && met.simplecookie_policy ) {
+        this.set_policy_url( met.simplecookie_policy );
+      }
+      return this;
+    },
     // Generic cookie functions... to get and set the cookie policy cookie!
     set: function () {
       d.cookie = 'CookiePolicy=' + this.state + '; expires=Tue, 19 Jan 2038 00:00:00 GMT; path=/';
@@ -157,8 +176,25 @@
         { title: title, text: text, req: req, used: true };
       return this;
     },
+    reset_types: function() {
+      var i,f=this.types.fi.cookies,t=this.types.th.cookies;
+      for( i in f ) {
+        if( f.hasOwnProperty( i ) ) {
+          f[i].used = false;
+        }
+      }
+      for( i in t ) {
+        if( t.hasOwnProperty( i ) ) {
+          t[i].used = false;
+        }
+      }
+      return this;
+    },
     _types: function( a, fl ) { // Turn on (fl=true) or off (fl=false) cookie types
       var i,f=this.types.fi.cookies,t=this.types.th.cookies;
+      if( Array.isArray(a[0]) ) {
+        a=a[0];
+      }
       for( i = a.length; i; ) {
         i--;
         if( f.hasOwnProperty( a[i] ) ) {
@@ -334,7 +370,7 @@
   };
 })(navigator,window,document);
 
-CookiePolicy.init().footer().tracking();
+CookiePolicy.init().parse_meta().footer().tracking();
 /*
 Example usage template
 

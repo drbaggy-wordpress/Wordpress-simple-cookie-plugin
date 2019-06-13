@@ -1,4 +1,23 @@
 /*
++----------------------------------------------------------------------
+| Copyright (c) 2019 Genome Research Ltd.
+| This file is part of the Pagesmith web framework.
++----------------------------------------------------------------------
+| The Pagesmith web framework is free software: you can redistribute
+| it and/or modify it under the terms of the GNU Lesser General Public
+| License as published by the Free Software Foundation; either version
+| 3 of the License, or (at your option) any later version.
+|
+| This program is distributed in the hope that it will be useful, but
+| WITHOUT ANY WARRANTY; without even the implied warranty of
+| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+| Lesser General Public License for more details.
+|
+| You should have received a copy of the GNU Lesser General Public
+| License along with this program. If not, see:
+|     <http://www.gnu.org/licenses/>.
++----------------------------------------------------------------------
+
   Styles for cookie policy footer/link and options dialog...
 
   First the cookie policy footer....
@@ -9,7 +28,7 @@
                       button in the bottom right hand corner
 
 */
-#cookie-policy        { position: fixed; bottom: 0; right: 0; width: auto }
+#cookie-policy        { position: fixed; bottom: 0; right: 0; width: auto; z-index: 1000000 }
 #cookie-policy.full   { width: 100%; background-color: #ccc; border-top: 1px solid #999 }
 
 /*
@@ -18,7 +37,7 @@
   ## Some responsive design work is required to allow this to "sensibly grow"
      and then go full screen as the screen size decreases...
 */
-#cookie-options       { position: fixed; bottom: 0; top: 0; right: 0; color: #000;
+#cookie-options       { position: fixed; bottom: 0; top: 0; right: 0; color: #000; z-index: 1000000;
                         width: 30%; background-color: #ccc; border-left: 1px solid #999;
                         text-align: left; overflow-y: auto; padding: 5px 0 2em }
 

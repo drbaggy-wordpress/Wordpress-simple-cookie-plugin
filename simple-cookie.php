@@ -52,13 +52,10 @@ Last modified  : 2018-02-12
  * Domain Path: /lang
  */
 
-if( 1 ) { // Set to 0 to use uncompressed css/js [ for debugging ]
-  define( 'COOKIE_CSS', 'cookies-min.css' );
-  define( 'COOKIE_JS',  'cookies-gcc.js' );
-} else {
-  define( 'COOKIE_CSS', 'cookies.css' );
-  define( 'COOKIE_JS',  'cookies.js' );
-}
+define( 'COOKIE_CSS', 'cookies-min.css' );
+define( 'COOKIE_JS',  'cookies-gcc.js' );
+define( 'COOKIE_CSS_DEBUG', 'cookies.css' );
+define( 'COOKIE_JS_DEBUG',  'cookies.js' );
 
 class SimpleCookie {
 /* This is just really for namespacing... as the only call needed is the
@@ -87,6 +84,7 @@ class SimpleCookie {
     register_setting( 'simplecookie', 'simplecookie_policy',    [ 'default' => ''] );       // Default to privacy page as defined by WordPress
     register_setting( 'simplecookie', 'simplecookie_custom_js'  );
     register_setting( 'simplecookie', 'simplecookie_custom_css' );
+    register_setting( 'simplecookie', 'simplecookie_debug',     [ 'default' => 'no' ] );
   }
 
   // Add CSS to admin page - to format checkbox as 2x3 array rather an a long list...
@@ -98,11 +96,11 @@ class SimpleCookie {
   public function enqueue_scripts() {
     // Push styles into header...
     if( get_option('simplecookie_active') !== 'no' ) {
-      wp_enqueue_style(     'simple-cookie',      '/wp-content/plugins/simple-cookie/'.COOKIE_CSS,               [], null, false );
+      wp_enqueue_style(     'simple-cookie',      '/wp-content/plugins/simple-cookie/'.( get_option('simplecookie_debug') === 'yes' ? COOKIE_CSS_DEBUG : COOKIE_CSS ), [], null, false );
       if( get_option( 'simplecookie_custom_css' ) ) {
         wp_enqueue_style(   'simple-cookie-cust', get_theme_file_uri( get_option( 'simplecookie_custom_css' ) ), [], null, false );
       }
-      wp_enqueue_script(    'simple-cookie',      '/wp-content/plugins/simple-cookie/'.COOKIE_JS,                [], null, true  );
+      wp_enqueue_script(    'simple-cookie',      '/wp-content/plugins/simple-cookie/'.( get_option('simplecookie_debug') === 'yes' ? COOKIE_JS_DEBUG  : COOKIE_JS ),  [], null, true  );
       if( get_option( 'simplecookie_custom_js' ) ) {
         wp_enqueue_script(  'simple-cookie-cust', get_theme_file_uri( get_option( 'simplecookie_custom_js'  ) ), [], null, true  );
       }
@@ -136,6 +134,7 @@ class SimpleCookie {
   // Now generate the administration form...
   public function options_form() {
     $act         = get_option(    'simplecookie_active' );
+    $debug       = get_option(    'simplecookie_debug' );
     $tps         = preg_split(    '/\s+/', get_option('simplecookie_types'), 0, PREG_SPLIT_NO_EMPTY );
     $types_array = [
       'f1' => 'Own functional',
@@ -173,6 +172,17 @@ class SimpleCookie {
           </td>
         </tr>
         <tr>
+          <th>Debug mode:</th>
+          <td>
+            <select name="simplecookie_debug" id="simplecookie_debug">
+              <option <?php echo 'no' !== $debug ? 'selected="selected" ' : ''; ?>value="yes">Uncompressed JavaScript</option>
+              <option <?php echo 'no' === $debug ? 'selected="selected" ' : ''; ?>value="no" >Compressed JavaScript</option>
+            </select></br />
+            To help debug javascript issues select uncompressed JavaScript option
+          </td>
+        </tr>
+        <tr>
+        <tr>
           <th>Cookie GA code:</th>
           <td>
             <input class="regular-text code" name="simplecookie_ga_code" type="text" id="simplecookie_ga_code"
@@ -209,7 +219,7 @@ class SimpleCookie {
             <input class="regular-text code" name="simplecookie_custom_js" type="text" id="simplecookie_custom_js"
                    value="<?php echo esc_html(get_option('simplecookie_custom_js')); ?>" pattern="^(.*[.]js)?$"
                    title="Must end in .js" /><br />
-            Path relative to your theme directory of custom javascript [Allows over-rides and re-configuration beyond what the prebious 3 options enable]
+            Path relative to your theme directory of custom javascript [Allows over-rides and re-configuration beyond what the previous 3 options enable]
           </td>
         </tr>
         <tr>

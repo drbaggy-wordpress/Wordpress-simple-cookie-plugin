@@ -1,5 +1,6 @@
 /*global CookiePolicy */
-(function(n,w,d){
+/* globals window, document, navigator */
+(function(n,w,d,o){
   'use strict';
  /*
 +----------------------------------------------------------------------
@@ -80,7 +81,7 @@
       this.dnt = (typeof n.doNotTrack   !== 'undefined')     ? n.doNotTrack
                : (typeof w.doNotTrack   !== 'undefined')     ? w.doNotTrack
                : (typeof n.msDoNotTrack !== 'undefined')     ? n.msDoNotTrack
-               : 'msTrackingProtectionEnabled' in w.external ? ( w.external.msTrackingProtectionEnabled() ? 1 : 0 )
+               : 'external' in w && 'msTrackingProtectionEnabled' in w.external ? ( w.external.msTrackingProtectionEnabled() ? 1 : 0 )
                : null
                ;
       this.track = ( 1 === parseInt(this.dnt,10) || 'yes' === this.dnt ) ? false
@@ -89,20 +90,20 @@
       return this;
     },
     parse_meta: function() {
-      var x = document.getElementsByTagName("meta"), met = {}, i = x.length;
+      var x = d.getElementsByTagName("meta"), met = {}, i = x.length;
       for( i; i; i ) {
         i--;
         if( x[i].content && x[i].name ) {
           met[x[i].name] = x[i].content;
         }
       }
-      if( met.hasOwnProperty( 'simplecookie_ga_code' ) && met.simplecookie_ga_code ) {
-        this.set_ga_code( ga_code );
+      if( o.call( met, 'simplecookie_ga_code' ) && met.simplecookie_ga_code ) {
+        this.set_ga_code( met.simplecookie_ga_code );
       }
-      if( met.hasOwnProperty( 'simplecookie_types' ) && met.simplecookie_types ) {
+      if( o.call( met, 'simplecookie_types' ) && met.simplecookie_types ) {
         this.reset_types().set_types( met.simplecookie_types.split(/\s+/) );
       }
-      if( met.hasOwnProperty( 'simplecookie_policy' ) && met.simplecookie_policy ) {
+      if( o.call( met, 'simplecookie_policy' ) && met.simplecookie_policy ) {
         this.set_policy_url( met.simplecookie_policy );
       }
       return this;
@@ -179,12 +180,12 @@
     reset_types: function() {
       var i,f=this.types.fi.cookies,t=this.types.th.cookies;
       for( i in f ) {
-        if( f.hasOwnProperty( i ) ) {
+        if( o.call( f, i ) ) {
           f[i].used = false;
         }
       }
       for( i in t ) {
-        if( t.hasOwnProperty( i ) ) {
+        if( o.call( f, i ) ) {
           t[i].used = false;
         }
       }
@@ -197,10 +198,10 @@
       }
       for( i = a.length; i; ) {
         i--;
-        if( f.hasOwnProperty( a[i] ) ) {
+        if( o.call( f, a[i] ) ) {
           f[ a[i] ].used = fl;
         }
-        if( t.hasOwnProperty( a[i] ) ) {
+        if( o.call( f, a[i] ) ) {
           t[ a[i] ].used = fl;
         }
       }
@@ -226,19 +227,19 @@
     // Display functions... footer footer message & footer options panel...
     footer: function () { /* PUBLIC */
       if( this.state === '' ) { // Initial footer is full width with text + 2 buttons
-        document.body.innerHTML = document.body.innerHTML                        +
+        d.body.innerHTML = d.body.innerHTML                        +
           '<div class="full" id="cookie-policy">'                                +
           '<p>We use cookies to enable functionality on our website and'         +
             ' track usage. <button id="cookie-accept">Accept cookies</button>'   +
             ' <button id="cookie-settings">Cookie settings</button></div>'       ;
       } else { // Otherwise it is a small button - in "bottom right" - can be changed with CSS
-        document.body.innerHTML = document.body.innerHTML                        +
+        d.body.innerHTML = d.body.innerHTML                        +
           '<div id="cookie-policy"><button id="cookie-settings">Cookies and privacy</button></div>';
       }
       return this.enable_actions();
     },
     _rm: function( id ) { // Remove a node from the DOM...
-      var e = document.getElementById( id );
+      var e = d.getElementById( id );
       if( e ) {
         e.parentNode.removeChild(e);
       }
@@ -250,7 +251,7 @@
     cookie_table: function ( conf ) {
       var markup = '',k,cn;
       for( k in conf.cookies ) {
-        if( conf.cookies.hasOwnProperty( k ) ) {
+        if( o.call( conf.cookies, k ) ) {
           cn = conf.cookies[k];
           if( cn.used ) {
             markup += '<tr id="cookie-' + k + '"' +
@@ -272,7 +273,7 @@
     },
     options: function () {
       var action_string = this.state === 'seen' ? 'Set' : 'Update';
-      document.body.innerHTML = document.body.innerHTML + '<div id="cookie-options">'        +
+      d.body.innerHTML = d.body.innerHTML + '<div id="cookie-options">'        +
         '<button id="cookie-close">Close</button><h2>Cookies and privacy</h2>'               +
         '<p>We use cookies to enable functionality within our website and track usage.</p>'  +
         '<p>Below you can choose the types of cookies we set in your browser - or you can'   +
@@ -298,12 +299,12 @@
           // Need to loop through both hashes!
           var a = [ 'seen' ], f = self.types.fi.cookies, t = self.types.th.cookies, k;
           for( k in f ) {
-            if( f.hasOwnProperty( k ) && f[ k ].used ) {
+            if( o.call( f,  k ) && f[ k ].used ) {
               a.push( k );
             }
           }
           for( k in t ) {
-            if( t.hasOwnProperty( k ) && t[ k ].used ) {
+            if( o.call( t, k ) && t[ k ].used ) {
               a.push( k );
             }
           }
@@ -368,7 +369,7 @@
       return this;
     }
   };
-})(navigator,window,document);
+})(navigator,window,document,Object.prototype.hasOwnProperty);
 
 CookiePolicy.init().parse_meta().footer().tracking();
 /*

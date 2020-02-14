@@ -1,6 +1,6 @@
 /*global CookiePolicy */
 /* globals window, document, navigator */
-(function(n,w,d,o){
+(function(n,w,d,hop){
   'use strict';
  /*
 +----------------------------------------------------------------------
@@ -97,13 +97,13 @@
           met[x[i].name] = x[i].content;
         }
       }
-      if( o.call( met, 'simplecookie_ga_code' ) && met.simplecookie_ga_code ) {
+      if( hop.call( met, 'simplecookie_ga_code' ) && met.simplecookie_ga_code ) {
         this.set_ga_code( met.simplecookie_ga_code );
       }
-      if( o.call( met, 'simplecookie_types' ) && met.simplecookie_types ) {
+      if( hop.call( met, 'simplecookie_types' ) && met.simplecookie_types ) {
         this.reset_types().set_types( met.simplecookie_types.split(/\s+/) );
       }
-      if( o.call( met, 'simplecookie_policy' ) && met.simplecookie_policy ) {
+      if( hop.call( met, 'simplecookie_policy' ) && met.simplecookie_policy ) {
         this.set_policy_url( met.simplecookie_policy );
       }
       return this;
@@ -180,12 +180,12 @@
     reset_types: function() {
       var i,f=this.types.fi.cookies,t=this.types.th.cookies;
       for( i in f ) {
-        if( o.call( f, i ) ) {
+        if( hop.call( f, i ) ) {
           f[i].used = false;
         }
       }
       for( i in t ) {
-        if( o.call( f, i ) ) {
+        if( hop.call( f, i ) ) {
           t[i].used = false;
         }
       }
@@ -198,10 +198,10 @@
       }
       for( i = a.length; i; ) {
         i--;
-        if( o.call( f, a[i] ) ) {
+        if( hop.call( f, a[i] ) ) {
           f[ a[i] ].used = fl;
         }
-        if( o.call( f, a[i] ) ) {
+        if( hop.call( f, a[i] ) ) {
           t[ a[i] ].used = fl;
         }
       }
@@ -251,7 +251,7 @@
     cookie_table: function ( conf ) {
       var markup = '',k,cn;
       for( k in conf.cookies ) {
-        if( o.call( conf.cookies, k ) ) {
+        if( hop.call( conf.cookies, k ) ) {
           cn = conf.cookies[k];
           if( cn.used ) {
             markup += '<tr id="cookie-' + k + '"' +
@@ -299,12 +299,12 @@
           // Need to loop through both hashes!
           var a = [ 'seen' ], f = self.types.fi.cookies, t = self.types.th.cookies, k;
           for( k in f ) {
-            if( o.call( f,  k ) && f[ k ].used ) {
+            if( hop.call( f,  k ) && f[ k ].used ) {
               a.push( k );
             }
           }
           for( k in t ) {
-            if( o.call( t, k ) && t[ k ].used ) {
+            if( hop.call( t, k ) && t[ k ].used ) {
               a.push( k );
             }
           }

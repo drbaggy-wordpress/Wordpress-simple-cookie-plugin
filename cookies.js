@@ -4,7 +4,7 @@
   'use strict';
  /*
 +----------------------------------------------------------------------
-| Copyright (c) 2019 Genome Research Ltd.
+| Copyright (c) 2019,2020 Genome Research Ltd.
 | This file is part of the Pagesmith web framework.
 +----------------------------------------------------------------------
 | The Pagesmith web framework is free software: you can redistribute

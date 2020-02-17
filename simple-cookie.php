@@ -1,7 +1,7 @@
 <?php
 /*
 +----------------------------------------------------------------------
-| Copyright (c) 2018 Genome Research Ltd.
+| Copyright (c) 2019,2020 Genome Research Ltd.
 | This is part of the Wellcome Sanger Institute extensions to
 | WordPress.
 +----------------------------------------------------------------------
@@ -89,7 +89,11 @@ class SimpleCookie {
 
   // Add CSS to admin page - to format checkbox as 2x3 array rather an a long list...
   public function admin_scripts() {
-    wp_enqueue_style(  'simple-cookie-admin', '/wp-content/plugins/simple-cookie/extra-form.css', [], null, false );
+    wp_enqueue_style(  'simple-cookie-admin',
+     get_option('simplecookie_debug') === 'yes'
+       ? '/wp-content/plugins/simple-cookie/extra-form.css'
+       : '/wp-content/plugins/simple-cookie/extra-form-min.css',
+     [], null, false );
   }
 
   // Add CSS/JS + additional CSS/JS into head/foot of page respectively...

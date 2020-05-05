@@ -43,7 +43,7 @@ Last modified  : 2018-02-12
  * Plugin Name: Simple cookie..
  * Plugin URI:  https://jamessmith.me.uk/simple-cookie/
  * Description: Simple javascript/css PECR compliant cookie module..
- * Version:     0.0.1
+ * Version:     0.1.0
  * Author:      James Smith
  * Author URI:  https://jamessmith.me.uk
  * Text Domain: simple-cookie-locale

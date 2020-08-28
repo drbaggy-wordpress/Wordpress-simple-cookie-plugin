@@ -89,22 +89,24 @@ class SimpleCookie {
 
   // Add CSS to admin page - to format checkbox as 2x3 array rather an a long list...
   public function admin_scripts() {
+    $base_url = plugin_dir_url( __FILE__ );
     wp_enqueue_style(  'simple-cookie-admin',
      get_option('simplecookie_debug') === 'yes'
-       ? '/wp-content/plugins/simple-cookie/extra-form.css'
-       : '/wp-content/plugins/simple-cookie/extra-form-min.css',
+       ? $base_url.'extra-form.css'
+       : $base_url.'extra-form-min.css',
      [], null, false );
   }
 
   // Add CSS/JS + additional CSS/JS into head/foot of page respectively...
   public function enqueue_scripts() {
+    $base_url = plugin_dir_url( __FILE__ );
     // Push styles into header...
     if( get_option('simplecookie_active') !== 'no' ) {
-      wp_enqueue_style(     'simple-cookie',      '/wp-content/plugins/simple-cookie/'.( get_option('simplecookie_debug') === 'yes' ? COOKIE_CSS_DEBUG : COOKIE_CSS ), [], null, false );
+      wp_enqueue_style(     'simple-cookie',      $base_url.( get_option('simplecookie_debug') === 'yes' ? COOKIE_CSS_DEBUG : COOKIE_CSS ), [], null, false );
       if( get_option( 'simplecookie_custom_css' ) ) {
         wp_enqueue_style(   'simple-cookie-cust', get_theme_file_uri( get_option( 'simplecookie_custom_css' ) ), [], null, false );
       }
-      wp_enqueue_script(    'simple-cookie',      '/wp-content/plugins/simple-cookie/'.( get_option('simplecookie_debug') === 'yes' ? COOKIE_JS_DEBUG  : COOKIE_JS ),  [], null, true  );
+      wp_enqueue_script(    'simple-cookie',      $base_url.( get_option('simplecookie_debug') === 'yes' ? COOKIE_JS_DEBUG  : COOKIE_JS ),  [], null, true  );
       if( get_option( 'simplecookie_custom_js' ) ) {
         wp_enqueue_script(  'simple-cookie-cust', get_theme_file_uri( get_option( 'simplecookie_custom_js'  ) ), [], null, true  );
       }

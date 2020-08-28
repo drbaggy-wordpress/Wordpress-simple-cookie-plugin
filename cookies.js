@@ -227,14 +227,16 @@
     // Display functions... footer footer message & footer options panel...
     footer: function () { /* PUBLIC */
       if( this.state === '' ) { // Initial footer is full width with text + 2 buttons
-        d.body.innerHTML = d.body.innerHTML                        +
+        d.body.insertAdjacentHTML('afterbegin',
           '<div class="full" id="cookie-policy">'                                +
           '<p>We use cookies to enable functionality on our website and'         +
             ' track usage. <button id="cookie-accept">Accept cookies</button>'   +
-            ' <button id="cookie-settings">Cookie settings</button></div>'       ;
+            ' <button id="cookie-settings">Cookie settings</button></div>'
+        );
       } else { // Otherwise it is a small button - in "bottom right" - can be changed with CSS
-        d.body.innerHTML = d.body.innerHTML                        +
-          '<div id="cookie-policy"><button id="cookie-settings">Cookies and privacy</button></div>';
+        d.body.insertAdjacentHTML('afterbegin',
+          '<div id="cookie-policy"><button id="cookie-settings">Cookies and privacy</button></div>'
+        );
       }
       return this.enable_actions();
     },
@@ -273,7 +275,7 @@
     },
     options: function () {
       var action_string = this.state === 'seen' ? 'Set' : 'Update';
-      d.body.innerHTML = d.body.innerHTML + '<div id="cookie-options">'        +
+      d.body.insertAdjacentHTML('afterbegin','<div id="cookie-options">'        +
         '<button id="cookie-close">Close</button><h2>Cookies and privacy</h2>'               +
         '<p>We use cookies to enable functionality within our website and track usage.</p>'  +
         '<p>Below you can choose the types of cookies we set in your browser - or you can'   +
@@ -285,7 +287,8 @@
         this.cookie_table( this.types.fi ) + this.cookie_table( this.types.th )              +
         '<blockquote><button id="cookie-update">' + action_string                            +
         ' preferences</button></blockquote>'                                                 +
-        '</div>'                                                                             ;
+        '</div>'
+      );
       // Now turn on the functionality of the buttons ... see code below!
       return this.enable_actions();
     },
@@ -319,7 +322,9 @@
           if( self.state === '' ) {
             self.state = 'seen';
           }
-          self.set().clear().options();
+          self.set();
+          self.clear();
+          self.options();
         };
       }
       // Update the states of cookie flags!

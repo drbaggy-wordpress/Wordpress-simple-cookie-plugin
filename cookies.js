@@ -185,7 +185,7 @@
         }
       }
       for( i in t ) {
-        if( hop.call( f, i ) ) {
+        if( hop.call( t, i ) ) {
           t[i].used = false;
         }
       }
@@ -201,7 +201,7 @@
         if( hop.call( f, a[i] ) ) {
           f[ a[i] ].used = fl;
         }
-        if( hop.call( f, a[i] ) ) {
+        if( hop.call( t, a[i] ) ) {
           t[ a[i] ].used = fl;
         }
       }

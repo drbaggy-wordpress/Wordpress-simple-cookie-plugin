@@ -58,8 +58,8 @@
 #cookie-options button { font-size: 1.2em; padding: 4px 1em; }
 button#cookie-close   { display: block; float: right; background-color: #666; font-size: 1em }
 
-@media print { /* Hide cookie button on print copy */
-  button#cookie-settings { display: none }
+@media print {
+ div#cookie-policy { display: none }
 }
 
 @media (max-width: 1280px) {

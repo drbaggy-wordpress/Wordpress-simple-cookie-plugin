@@ -128,10 +128,18 @@
       fi: {
         caption: 'Our cookies',
         cookies: {
+          e1: {
+            title:  'Essential',
+            text:   'These allow functions of the website to work (<em>e.g.</em> remembering cookie' +
+                    ' preferences, security cookies - CSRF/user/session) and a required for the site to' +
+                    ' function correctly',
+            req:    true,
+            used:   true
+          },
           f1: {
             title:  'Functional',
-            text:   'Allows functions of the website to work (<em>e.g.</em> remembering cookie' +
-                    ' preferences, capabilities of your browser, security cookies - CSRF/user/session)',
+            text:   'Allows other (optional) functions of the website to work (<em>e.g.</em> preferences,' +
+                    ' bookmarking etc) - disabling these may reduce the usability or functioning of the website',
             req:    true,
             used:   true
           },
@@ -148,11 +156,19 @@
       th: {
         caption: 'Third party cookies',
         cookies: {
+          e3: {
+            title:  'Essential (3rd party)',
+            text:   'These allow functions of the website to work (<em>e.g.</em> reCAPCHA, fonts, maps,' +
+                    ' embedded videos etc, cookie prefernces, security cookies - CSRF/user/session)'     +
+                    ' and a required for the site to function correctly',
+            req:    true,
+            used:   true
+          },
           f3: {
             title:  'Functional (3rd party)',
-            text:   'Allows functions of the website to work (reCAPCHA, fonts, maps,' +
-                    ' embedded videos etc)',
-            req:    true,
+            text:   'Allows other (optional) functions of the website to work (e.g. preferences,' +
+                    ' bookmarking etc) - disabling these may reduce the usability or functioning of the website',
+            req:    false,
             used:   false
           },
           t3: {

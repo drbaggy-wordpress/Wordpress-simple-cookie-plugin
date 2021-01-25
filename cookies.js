@@ -150,6 +150,13 @@
                     ' with third-party organisations but held on our own servers',
             req:    false,
             used:   true
+          },
+          m1: {
+            title:  'Marketing',
+            text:   'To enable customisation of adverts and marketing embeded in the page' +
+                    ' based on your previous activities and demographics',
+            req:    false,
+            used:   true
           }
         }
       },

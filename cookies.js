@@ -156,7 +156,7 @@
             text:   'To enable customisation of adverts and marketing embeded in the page' +
                     ' based on your previous activities and demographics',
             req:    false,
-            used:   true
+            used:   false
           }
         }
       },

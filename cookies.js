@@ -140,8 +140,8 @@
             title:  'Functional',
             text:   'Allows other (optional) functions of the website to work (<em>e.g.</em> preferences,' +
                     ' bookmarking etc) - disabling these may reduce the usability or functioning of the website',
-            req:    true,
-            used:   true
+            req:    false,
+            used:   false
           },
           t1: {
             title:  'Tracking',
@@ -169,7 +169,7 @@
                     ' embedded videos etc, cookie prefernces, security cookies - CSRF/user/session)'     +
                     ' and a required for the site to function correctly',
             req:    true,
-            used:   true
+            used:   false
           },
           f3: {
             title:  'Functional (3rd party)',
